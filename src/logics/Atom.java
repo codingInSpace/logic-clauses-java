@@ -45,6 +45,9 @@ public class Atom {
     public void setValue(String value) { mValue = value; }
     public void setSign(boolean sign) { signPositive = sign; }
 
+    public String getValue() { return mValue; }
+    public boolean getSign() { return signPositive; }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("");

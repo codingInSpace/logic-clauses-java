@@ -1,6 +1,7 @@
 package logics;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 /**
@@ -8,13 +9,11 @@ import java.util.Iterator;
  */
 public class Clause {
     private ArrayList<Atom> atoms;
-
-    public Clause() {
-        atoms = new ArrayList<>();
-    }
+    public boolean pruned;
 
     public Clause(String inputString) {
         atoms = new ArrayList<>();
+        pruned = false;
 
         // Split input into parts separated by capital letters
         String[] parts = inputString.split("(?<=[A-Z])");
@@ -31,11 +30,25 @@ public class Clause {
         }
     }
 
+    public Clause(Collection<Atom> collection) {
+        Iterator it = collection.iterator();
+        System.out.println((Atom) it.next());
+
+        while(it.hasNext()) {
+            Atom a = (Atom) it.next();
+            add(a);
+        }
+    }
+
     public void add(Atom atom) {
         atoms.add(atom);
     }
 
-    public ArrayList<Atom> getAtoms() {
+    public void prune() {
+        pruned = true;
+    }
+
+    public ArrayList<Atom> list() {
         return atoms;
     }
 
