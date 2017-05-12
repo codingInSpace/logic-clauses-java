@@ -19,11 +19,10 @@ public class KnowledgeBase {
 
     @Override
     public String toString() {
-        Iterator it = data.iterator();
         StringBuilder sb = new StringBuilder("");
 
-        while (it.hasNext()) {
-            sb.append(it.next().toString() + "\n");
+        for (int i = 0; i < data.size(); i++) {
+            sb.append(data.get(i).toString() + "\n");
         }
 
         return sb.toString();

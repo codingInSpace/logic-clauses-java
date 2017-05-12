@@ -1,20 +1,20 @@
 package logics;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by jonathan on 5/11/17.
  */
 public class Clause {
-    private HashSet<Atom> atoms;
+    private ArrayList<Atom> atoms;
 
     public Clause() {
-        atoms = new HashSet<>();
+        atoms = new ArrayList<>();
     }
 
     public Clause(String inputString) {
-        atoms = new HashSet<>();
+        atoms = new ArrayList<>();
 
         // Split input into parts separated by capital letters
         String[] parts = inputString.split("(?<=[A-Z])");
@@ -35,17 +35,16 @@ public class Clause {
         atoms.add(atom);
     }
 
-    public HashSet<Atom> getAtoms() {
+    public ArrayList<Atom> getAtoms() {
         return atoms;
     }
 
     @Override
     public String toString() {
-        Iterator it = atoms.iterator();
         StringBuilder sb = new StringBuilder("Clause: ");
 
-        while (it.hasNext()) {
-            sb.append(it.next().toString() + " ");
+        for (int i = 0; i < atoms.size(); i++) {
+            sb.append(atoms.get(i).toString() + " ");
         }
 
         return sb.toString();
