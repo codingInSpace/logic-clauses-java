@@ -5,23 +5,55 @@ package logics;
  */
 public class Atom {
     private Rule mRule;
-    private Character mValue;
+    private String mValue;
     private boolean signPositive;
 
-    public Atom(Rule r, Character c, boolean sign) {
+    public Atom(Rule r, String s, boolean sign) {
         mRule = r;
-        mValue = c;
+        mValue = s;
         signPositive = sign;
     }
 
+    public Atom(String input) {
+        String[] parts = input.split("(?!^)");
+        boolean initializedSign = false;
+
+        for (int i = 0; i < parts.length; i++) {
+            switch(parts[i]) {
+                case "u":
+                    mRule = Rule.OR;
+                    break;
+                case "^":
+                    mRule = Rule.AND;
+                    break;
+                case "-":
+                    signPositive = false;
+                    initializedSign = true;
+                    break;
+                default:
+                    if (parts[i].matches("[A-Z]"))
+                        mValue = parts[i];
+            }
+        }
+
+        // If nothing else, sign is positive
+        if (!initializedSign)
+            signPositive = true;
+    }
+
     public void setRule(Rule rule) { mRule = rule; }
-    public void setValue(Character value) { mValue = value; }
+    public void setValue(String value) { mValue = value; }
     public void setSign(boolean sign) { signPositive = sign; }
 
     @Override
     public String toString() {
-        String sign = signPositive ? "" : "-";
-        return mRule + " " + sign + mValue;
+        StringBuilder sb = new StringBuilder("");
+
+        sb.append(mRule != null ? mRule : "");
+        sb.append(" ");
+        sb.append(signPositive ? "" : "-");
+        sb.append(mValue);
+        return sb.toString();
     }
 
     @Override

@@ -5,10 +5,15 @@ package logics;
  */
 public class Main {
 
-    // init KB
+    public static void main(String[] args) {
+        // init KB
 
-    // Read clauses from file
+        // Read clauses from file
         // make atoms
         // put atoms as clauses
         // put clauses in KB
+
+        Clause test = new Clause("A u -B u C");
+        System.out.println(test);
+    }
 }
