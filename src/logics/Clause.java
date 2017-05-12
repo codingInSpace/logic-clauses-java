@@ -24,7 +24,6 @@ public class Clause {
             parts[i] = parts[i].replaceAll("\\s+","");
         }
 
-
         // Make atom objects out of parts
         for (int i = 0; i < parts.length; i++) {
             Atom a = new Atom(parts[i]);
@@ -43,10 +42,10 @@ public class Clause {
     @Override
     public String toString() {
         Iterator it = atoms.iterator();
-        StringBuilder sb = new StringBuilder("");
+        StringBuilder sb = new StringBuilder("Clause: ");
 
         while (it.hasNext()) {
-            sb.append(it.next().toString() + "\n");
+            sb.append(it.next().toString() + " ");
         }
 
         return sb.toString();

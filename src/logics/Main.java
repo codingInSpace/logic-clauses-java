@@ -6,14 +6,15 @@ package logics;
 public class Main {
 
     public static void main(String[] args) {
-        // init KB
+        KnowledgeBase kb = new KnowledgeBase();
 
-        // Read clauses from file
-        // make atoms
-        // put atoms as clauses
-        // put clauses in KB
+        Clause c1 = new Clause("A u -B u C");
+        Clause c2 = new Clause("-A ^ D");
 
-        Clause test = new Clause("A u -B u C");
-        System.out.println(test);
+        kb.add(c1);
+        kb.add(c2);
+
+        System.out.println(kb);
+
     }
 }

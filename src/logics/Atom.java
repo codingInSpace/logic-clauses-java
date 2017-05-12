@@ -49,8 +49,7 @@ public class Atom {
     public String toString() {
         StringBuilder sb = new StringBuilder("");
 
-        sb.append(mRule != null ? mRule : "");
-        sb.append(" ");
+        sb.append(mRule != null ? mRule + " ": "");
         sb.append(signPositive ? "" : "-");
         sb.append(mValue);
         return sb.toString();
