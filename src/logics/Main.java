@@ -1,18 +1,18 @@
 package logics;
 
+import java.util.ArrayList;
+
 /**
  * Created by jonathan on 5/11/17.
  */
 public class Main {
 
     public static void main(String[] args) {
-        KnowledgeBase kb = new KnowledgeBase();
+        ArrayList<Clause> clauses = new ArrayList<>();
+        clauses.add(new Clause("A u -B u C"));
+        clauses.add(new Clause("-A u B"));
 
-        Clause c1 = new Clause("A u B u C");
-        Clause c2 = new Clause("-A u B");
-
-        kb.add(c1);
-        kb.add(c2);
+        KnowledgeBase kb = new KnowledgeBase(clauses);
 
         System.out.println(kb);
 

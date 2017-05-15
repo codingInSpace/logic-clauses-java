@@ -3,6 +3,7 @@ package logics;
 import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 
 /**
@@ -13,6 +14,11 @@ public class KnowledgeBase {
 
     public KnowledgeBase() {
         data = new LinkedList<>();
+    }
+
+    public KnowledgeBase(Collection<Clause> collection) {
+        data = new LinkedList<>();
+        data.addAll(collection);
     }
 
     public void add(Clause clause) {
