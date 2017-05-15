@@ -1,8 +1,6 @@
 package logics;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 /**
  * Created by jonathan on 5/11/17.
@@ -30,12 +28,11 @@ public class Clause {
         }
     }
 
-    public Clause(Collection<Atom> collection) {
-        Iterator it = collection.iterator();
-        System.out.println((Atom) it.next());
+    public Clause(ArrayList<Atom> list) {
+        atoms = new ArrayList<>();
+        pruned = false;
 
-        while(it.hasNext()) {
-            Atom a = (Atom) it.next();
+        for (Atom a : list) {
             add(a);
         }
     }

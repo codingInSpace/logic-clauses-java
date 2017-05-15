@@ -54,15 +54,12 @@ public class KnowledgeBase {
     }
 
     private Clause infer(Clause c1, Clause c2) {
-        Clause newClause;
         boolean nothingChanged = true;
 
         ArrayList<Atom> combinedAtoms = new ArrayList<>();
 
-        for (int i = 0; i < c1.list().size(); i++)
-            combinedAtoms.add(c1.list().get(i));
-        for (int i = 0; i < c2.list().size(); i++)
-            combinedAtoms.add(c2.list().get(i));
+        combinedAtoms.addAll(c1.list());
+        combinedAtoms.addAll(c2.list());
 
         for (int i = 0; i < c1.list().size(); i++) {
             for (int j = 0; j < c2.list().size(); j++) {
@@ -81,19 +78,17 @@ public class KnowledgeBase {
 
         if (nothingChanged)
             return null;
-        else {
-            newClause = new Clause(combinedAtoms);
-            return newClause;
-        }
+        else
+            return new Clause(combinedAtoms);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("");
 
-        for (int i = 0; i < data.size(); i++) {
-            if (!data.get(i).pruned)
-                sb.append(data.get(i).toString() + "\n");
+        for (Clause c : data) {
+            if (!c.pruned)
+                sb.append(c.toString() + "\n");
         }
 
         return sb.toString();
