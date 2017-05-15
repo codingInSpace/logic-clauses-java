@@ -49,6 +49,14 @@ public class Clause {
         return atoms;
     }
 
+    public boolean isSubset(Clause c2) {
+        for (Atom atom : atoms)
+            if (!c2.list().contains(atom))
+                return false;
+
+        return true;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Clause: ");

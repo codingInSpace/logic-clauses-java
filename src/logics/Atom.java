@@ -72,7 +72,14 @@ public class Atom {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+
         Atom a2 = (Atom) o;
-        return (this.mRule == a2.mRule && this.mValue == a2.mValue && this.signPositive == a2.signPositive);
+        return (this.mRule == a2.mRule && this.mValue.equals(a2.mValue) && this.signPositive == a2.signPositive);
     }
 }

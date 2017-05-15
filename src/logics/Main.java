@@ -16,13 +16,13 @@ public class Main {
         // Dev
         if (args.length == 0) {
             clauses.add(new Clause("A u -B u C"));
-            clauses.add(new Clause("-A u B"));
+            clauses.add(new Clause("C"));
         }
 
         KnowledgeBase kb = new KnowledgeBase(clauses);
 
         System.out.println(kb);
 
-        kb.calculate();
+        kb.resolve();
     }
 }

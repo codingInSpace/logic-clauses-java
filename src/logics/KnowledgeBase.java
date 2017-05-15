@@ -23,25 +23,35 @@ public class KnowledgeBase {
         data.add(clause);
     }
 
-    public void calculate() {
+    public void resolve() {
         LinkedList<Clause> newData = new LinkedList<>();
 
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).pruned) continue;
+        for (int i = 0; i < data.size() - 1; i++) {
+           //if (data.get(i).pruned) continue;
 
-            for (int j = 0; j < data.size(); j++) {
-                if (j == i) continue;
-                if (data.get(j).pruned) continue;
+            for (int j = i + 1; j < data.size(); j++) {
+                //if (data.get(j).pruned) continue;
 
                 Clause c = infer(data.get(i), data.get(j));
 
                 if (c != null) {
                     newData.add(c);
-                    data.get(i).prune();
-                    data.get(j).prune();
+                    //data.get(i).prune();
+                    //data.get(j).prune();
                 }
             }
         }
+
+        System.out.println("newdata size: " + newData.size());
+
+        // Simplify KB by overriding clauses for which there are subsets
+//        for (int i = 0; i < newData.size(); i++) {
+//            for (int j = 0; j < data.size(); j++) {
+//                if (newData.get(i).isSubset(data.get(j))) {
+//                    data.set(j, newData.get(i));
+//                }
+//            }
+//        }
 
         if (newData.size() > 0) {
             for (int i = data.size() - 1; i == 0; i--) {
@@ -59,6 +69,12 @@ public class KnowledgeBase {
 
     private Clause infer(Clause c1, Clause c2) {
         boolean nothingChanged = true;
+
+        // Check if one clause is a subset of the other
+        if (c1.isSubset(c2))
+            return c1;
+        if (c2.isSubset(c1))
+            return c2;
 
         ArrayList<Atom> combinedAtoms = new ArrayList<>();
 
