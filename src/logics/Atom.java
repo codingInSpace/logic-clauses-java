@@ -47,6 +47,7 @@ public class Atom {
 
     public String getValue() { return mValue; }
     public boolean getSign() { return signPositive; }
+    public Rule getRule() { return mRule; }
 
     @Override
     public String toString() {

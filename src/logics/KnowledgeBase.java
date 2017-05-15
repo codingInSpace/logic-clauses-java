@@ -66,12 +66,24 @@ public class KnowledgeBase {
                 Atom a1 = c1.list().get(i);
                 Atom a2 = c2.list().get(j);
 
+                // Check for neutralizing signs atoms
                 if (a1.getValue().equals(a2.getValue()) && a1.getSign() != a2.getSign()) {
                     nothingChanged = false;
 
                     // Remove a1 and a2 from new clause
                     combinedAtoms.remove(a1);
                     combinedAtoms.remove(a2);
+                }
+
+                // Check for duplicated union atoms
+                if (a1.getValue().equals(a2.getValue())
+                        && a1.getSign() == a2.getSign()
+                        && a1.getRule() == Rule.OR
+                        && a2.getRule() == Rule.OR) {
+                    nothingChanged = false;
+
+                    // Remove one of the atoms from new clause
+                    combinedAtoms.remove(a1);
                 }
             }
         }
