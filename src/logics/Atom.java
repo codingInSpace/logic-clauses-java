@@ -36,6 +36,9 @@ public class Atom {
             }
         }
 
+        if (mRule == null)
+            mRule = Rule.OR;
+
         // If nothing else, sign is positive
         if (!initializedSign)
             signPositive = true;
@@ -49,11 +52,19 @@ public class Atom {
     public boolean getSign() { return signPositive; }
     public Rule getRule() { return mRule; }
 
+    public String prettyPrint(boolean showFirstRule) {
+        StringBuilder sb = new StringBuilder("");
+
+        sb.append(showFirstRule ? mRule + " ": "");
+        sb.append(signPositive ? "" : "-");
+        sb.append(mValue);
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("");
-
-        sb.append(mRule != null ? mRule + " ": "");
+        sb.append(mRule + " ");
         sb.append(signPositive ? "" : "-");
         sb.append(mValue);
         return sb.toString();

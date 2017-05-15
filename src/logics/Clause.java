@@ -54,7 +54,7 @@ public class Clause {
         StringBuilder sb = new StringBuilder("Clause: ");
 
         for (int i = 0; i < atoms.size(); i++) {
-            sb.append(atoms.get(i).toString() + " ");
+            sb.append(atoms.get(i).prettyPrint(i > 0) + " ");
         }
 
         return sb.toString();
