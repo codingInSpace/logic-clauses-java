@@ -44,7 +44,7 @@ public class KnowledgeBase {
                 for (int j = i + 1; j < data.size(); j++) {
                     Clause c = infer(data.get(i), data.get(j));
 
-                    if (c != null) {
+                    if (c != null && c.list().size() > 0) {
                         newData.add(c);
                         newConsequences = true;
                     }
@@ -54,6 +54,9 @@ public class KnowledgeBase {
 
             if (newData.size() > 0) {
                 data.addAll(newData);
+
+                //System.out.println("Added new clauses");
+                //System.out.println(this);
 
                 // Simplify KB by pruning clauses for which there are subsets
                 for (int i = 0; i < data.size() - 1; i++) {
