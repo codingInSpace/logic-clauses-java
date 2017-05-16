@@ -50,6 +50,12 @@ public class Clause {
     }
 
     public boolean isSubset(Clause c2) {
+
+        // If clauses are of the same length they
+        // can not be subsets without being equal
+        if (c2.list().size() == atoms.size())
+            return false;
+
         for (Atom atom : atoms)
             if (!c2.list().contains(atom))
                 return false;
@@ -57,6 +63,26 @@ public class Clause {
         return true;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null)
+            return false;
+        if (getClass() != o.getClass())
+            return false;
+
+        Clause c2 = (Clause) o;
+
+        if (c2.list().size() != atoms.size())
+            return false;
+
+        for (int i = 0; i < atoms.size(); i++)
+            if (!atoms.get(i).equals(c2.list().get(i)))
+                return false;
+
+        return true;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Clause: ");

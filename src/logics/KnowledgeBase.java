@@ -2,6 +2,7 @@ package logics;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -24,57 +25,81 @@ public class KnowledgeBase {
     }
 
     public void resolve() {
-        LinkedList<Clause> newData = new LinkedList<>();
+        boolean newConsequences = true;
 
-        for (int i = 0; i < data.size() - 1; i++) {
-           //if (data.get(i).pruned) continue;
+        int counter = 0;
 
-            for (int j = i + 1; j < data.size(); j++) {
-                //if (data.get(j).pruned) continue;
+        while (newConsequences) {
+            LinkedList<Clause> newData = new LinkedList<>();
 
-                Clause c = infer(data.get(i), data.get(j));
-
-                if (c != null) {
-                    newData.add(c);
-                    //data.get(i).prune();
-                    //data.get(j).prune();
-                }
-            }
-        }
-
-        System.out.println("newdata size: " + newData.size());
-
-        // Simplify KB by overriding clauses for which there are subsets
-//        for (int i = 0; i < newData.size(); i++) {
-//            for (int j = 0; j < data.size(); j++) {
-//                if (newData.get(i).isSubset(data.get(j))) {
-//                    data.set(j, newData.get(i));
-//                }
-//            }
-//        }
-
-        if (newData.size() > 0) {
-            for (int i = data.size() - 1; i == 0; i--) {
-                newData.addFirst(data.get(i));
-            }
-
-            data.clear();
-            data = newData;
-            System.out.println("inference complete");
+            System.out.println("New iteration:");
             System.out.println(this);
-        } else {
-            System.out.println("inference incomplete");
+
+            if (counter > 6) break;
+            counter++;
+
+            newConsequences = false;
+
+            for (int i = 0; i < data.size() - 1; i++) {
+                for (int j = i + 1; j < data.size(); j++) {
+                    Clause c = infer(data.get(i), data.get(j));
+
+                    if (c != null) {
+                        newData.add(c);
+                        newConsequences = true;
+                    }
+                }
+                //System.out.println(i);
+            }
+
+            if (newData.size() > 0) {
+                data.addAll(newData);
+
+                // Simplify KB by pruning clauses for which there are subsets
+                for (int i = 0; i < data.size() - 1; i++) {
+                    for (int j = i + 1; j < data.size(); j++) {
+                        if (data.get(i).isSubset(data.get(j)) && !data.get(j).pruned) {
+                            data.get(j).prune();
+                        }
+
+                        else if (data.get(j).isSubset(data.get(i)) && !data.get(i).pruned)
+                            data.get(i).prune();
+                    }
+                }
+
+                // Remove pruned
+                data.removeIf(clause -> clause.pruned);
+
+                // Prune duplicates
+                for (int i = 0; i < data.size() - 1; i++) {
+                    for (int j = i + 1; j < data.size(); j++) {
+                        if (data.get(i).equals(data.get(j))) {
+                            if (data.get(i).pruned)
+                                continue;
+
+                            if (data.get(j).pruned)
+                                continue;
+
+                            data.get(j).prune();
+                        }
+                    }
+                }
+
+                // Remove pruned
+                data.removeIf(clause -> clause.pruned);
+            }
         }
+
+        System.out.println("inference complete");
+        System.out.println(this);
     }
 
     private Clause infer(Clause c1, Clause c2) {
         boolean nothingChanged = true;
 
-        // Check if one clause is a subset of the other
-        if (c1.isSubset(c2))
-            return c1;
-        if (c2.isSubset(c1))
-            return c2;
+        //System.out.println("comparing:");
+        //System.out.println(c1);
+        //System.out.println(c2);
 
         ArrayList<Atom> combinedAtoms = new ArrayList<>();
 
@@ -108,10 +133,12 @@ public class KnowledgeBase {
             }
         }
 
-        if (nothingChanged)
+        if (nothingChanged) {
             return null;
-        else
+        }
+        else {
             return new Clause(combinedAtoms);
+        }
     }
 
     @Override

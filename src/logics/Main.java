@@ -16,7 +16,8 @@ public class Main {
         // Dev
         if (args.length == 0) {
             clauses.add(new Clause("A u -B u C"));
-            clauses.add(new Clause("C"));
+            clauses.add(new Clause("-A u C"));
+            clauses.add(new Clause("B"));
         }
 
         KnowledgeBase kb = new KnowledgeBase(clauses);
